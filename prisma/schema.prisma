@@ -17,17 +17,9 @@ model User {
 }
 
 model Env {
-  id          String       @id @default(uuid()) @map("_id")
+  id          String @id @default(uuid()) @map("_id")
   name        String
-  envElements EnvElement[]
-  User        User?        @relation(fields: [userId], references: [id])
-  userId      String?
-}
-
-model EnvElement {
-  id    String @id @default(uuid()) @map("_id")
-  key   String
-  value String
-  Env   Env    @relation(fields: [envId], references: [id])
-  envId String
+  envElements Json
+  User        User   @relation(fields: [userId], references: [id])
+  userId      String
 }

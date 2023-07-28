@@ -38,14 +38,14 @@ export const action: ActionFunction = async ({
     };
   }
 
-  return createUserSession(user.id, "/");
+  return createUserSession(user.id, "/dashboard");
 };
 
 export default function SignUp() {
   let actionData = useActionData<ActionData | undefined>();
 
   return (
-    <div className="flex flex-col gap-3 min-h-screen items-center justify-center">
+    <>
       <h1 className="text-3xl font-bold">Get Started!</h1>
       <Form
         method="post"
@@ -58,26 +58,26 @@ export default function SignUp() {
           name="email"
           type="email"
           placeholder="email"
-          className="bg-secondary w-56 px-2 py-1 rounded-md border border-highlight"
+          className="text-field"
         />
         <input
           name="username"
           type="text"
           placeholder="username"
-          className="bg-secondary w-56 px-2 py-1 rounded-md border border-highlight"
+          className="text-field"
         />
         <input
           name="password"
           type="password"
           placeholder="password"
-          className="bg-secondary w-56 px-2 py-1 rounded-md border border-highlight"
+          className="text-field"
         />
         <Link className="text-sm hover:underline" to="/auth/signin">
           I have an account already!
         </Link>
         <div id="form-error-message">
           {actionData?.formError ? (
-            <p className="form-validation-error" role="alert">
+            <p className="text-red-400" role="alert">
               {actionData?.formError}
             </p>
           ) : null}
@@ -86,6 +86,6 @@ export default function SignUp() {
           Sign In
         </button>
       </Form>
-    </div>
+    </>
   );
 }

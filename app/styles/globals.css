@@ -13,5 +13,13 @@ body {
 }
 
 .btn {
-  @apply bg-secondary px-4 py-1 rounded-md border border-highlight
+  @apply bg-secondary px-4 py-1 rounded-md border border-highlight w-fit;
+}
+
+.text-field {
+  @apply bg-secondary w-56 px-2 py-1 rounded-md border border-highlight;
+}
+
+.table-element {
+  @apply bg-secondary px-4 py-1 rounded-md border border-highlight;
 }
