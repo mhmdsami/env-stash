@@ -1,5 +1,7 @@
 import { Form, Link, useActionData } from "@remix-run/react";
 import { createUserSession, signUp } from "~/utils/session.server";
+import { useEffect } from "react";
+import toast from "~/utils/toast.client";
 import type { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 
 type ActionData = {
@@ -44,15 +46,18 @@ export const action: ActionFunction = async ({
 export default function SignUp() {
   let actionData = useActionData<ActionData | undefined>();
 
+  useEffect(() => {
+    if (actionData?.formError) {
+      toast.error(actionData.formError);
+    }
+  }, [actionData]);
+
   return (
     <>
       <h1 className="text-3xl font-bold">Get Started!</h1>
       <Form
         method="post"
         className="flex flex-col gap-3 items-center justify-center"
-        aria-describedby={
-          actionData?.formError ? "form-error-message" : undefined
-        }
       >
         <input
           name="email"
@@ -75,13 +80,6 @@ export default function SignUp() {
         <Link className="text-sm hover:underline" to="/auth/signin">
           I have an account already!
         </Link>
-        <div id="form-error-message">
-          {actionData?.formError ? (
-            <p className="text-red-400" role="alert">
-              {actionData?.formError}
-            </p>
-          ) : null}
-        </div>
         <button type="submit" className="btn">
           Sign In
         </button>

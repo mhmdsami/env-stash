@@ -109,9 +109,6 @@ export default function DashboardCreate() {
             name="name"
             placeholder="dashboard-prod"
             className="text-field"
-            aria-describedby={
-              actionData?.formError ? "form-error-message" : undefined
-            }
           />
         </div>
         <div className="flex flex-col gap-3 w-fit">
@@ -126,9 +123,6 @@ export default function DashboardCreate() {
                 name="key[]"
                 className="text-field"
                 placeholder="API_BASE_URL"
-                aria-describedby={
-                  actionData?.formError ? "form-error-message" : undefined
-                }
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -157,9 +151,6 @@ export default function DashboardCreate() {
                 type="text"
                 name="value[]"
                 className="text-field"
-                aria-describedby={
-                  actionData?.formError ? "form-error-message" : undefined
-                }
               />
             </div>
           ))}
