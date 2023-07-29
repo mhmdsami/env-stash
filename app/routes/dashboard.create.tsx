@@ -7,6 +7,7 @@ import { requireUserId } from "~/utils/session.server";
 import type { Env } from "~/types";
 import type { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
+import AddEnv from "~/components/AddEnv";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -108,7 +109,7 @@ export default function DashboardCreate() {
             type="text"
             name="name"
             placeholder="dashboard-prod"
-            className="text-field"
+            className="text-field w-56"
           />
         </div>
         <div className="flex flex-col gap-3 w-fit">
@@ -121,7 +122,7 @@ export default function DashboardCreate() {
                 key="key-0"
                 type="text"
                 name="key[]"
-                className="text-field"
+                className="text-field w-56"
                 placeholder="API_BASE_URL"
               />
             </div>
@@ -133,27 +134,11 @@ export default function DashboardCreate() {
                 key="value-0"
                 type="text"
                 name="value[]"
-                className="text-field"
+                className="text-field w-56"
               />
             </div>
           </div>
-          {Array.from({ length: inputCount }, (_, i) => (
-            <div key={i} className="flex gap-3">
-              <input
-                key={`key-${i + 1}`}
-                type="text"
-                name="key[]"
-                className="text-field"
-                placeholder="API_BASE_URL"
-              />
-              <input
-                key={`value-${i + 1}`}
-                type="text"
-                name="value[]"
-                className="text-field"
-              />
-            </div>
-          ))}
+          <AddEnv inputCount={inputCount} />
         </div>
       </Form>
       <button

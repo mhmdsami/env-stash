@@ -63,19 +63,19 @@ export default function SignUp() {
           name="email"
           type="email"
           placeholder="email"
-          className="text-field"
+          className="text-field w-56"
         />
         <input
           name="username"
           type="text"
           placeholder="username"
-          className="text-field"
+          className="text-fieldi w-56"
         />
         <input
           name="password"
           type="password"
           placeholder="password"
-          className="text-field"
+          className="text-field w-56"
         />
         <Link className="text-sm hover:underline" to="/auth/signin">
           I have an account already!

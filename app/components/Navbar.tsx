@@ -26,6 +26,14 @@ const Navbar = ({ user }: NavbarProps) => {
       text: "Dashboard",
       to: "/dashboard",
     },
+    "/auth/signin": {
+      text: "Sign Up",
+      to: "/auth/signup",
+    },
+    "/auth/signup": {
+      text: "Sign In",
+      to: "/auth/signin",
+    },
   };
 
   const { text, to } = links[pathname in links ? pathname : "/"];

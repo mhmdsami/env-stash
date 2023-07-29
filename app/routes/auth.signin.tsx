@@ -58,13 +58,13 @@ export default function SignIn() {
           name="username"
           type="text"
           placeholder="username"
-          className="text-field"
+          className="text-field w-56"
         />
         <input
           name="password"
           type="password"
           placeholder="password"
-          className="text-field"
+          className="text-field w-56"
         />
         <Link className="text-sm hover:underline" to="/auth/signup">
           I don't have an account yet.
