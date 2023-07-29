@@ -12,6 +12,7 @@ import Navbar from "~/components/Navbar";
 import { getUser } from "~/utils/session.server";
 import { json } from "@remix-run/node";
 import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { Toaster } from "react-hot-toast";
 
 export const links: LinksFunction = () => [
   {
@@ -40,6 +41,7 @@ export default function App() {
       </head>
       <body>
         <Navbar user={user} />
+        <Toaster position="top-right" containerClassName="mt-[10vh]" />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

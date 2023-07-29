@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Form, useActionData } from "@remix-run/react";
+import toast from "~/utils/toast";
+import { useEffect, useState } from "react";
+import { Form, useActionData, useNavigate } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { json } from "@remix-run/node";
+import { requireUserId } from "~/utils/session.server";
+import type { Env } from "~/types";
 import type { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
-import type { Env } from "~/types";
-import { requireUserId } from "~/utils/session.server";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -79,10 +80,23 @@ export const action: ActionFunction = async ({ request }) => {
 export default function DashboardCreate() {
   const actionData = useActionData<ActionData | undefined>();
   const [inputCount, setInputCount] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (actionData?.formError) {
+      toast.error(actionData.formError);
+    }
+
+    if (actionData?.env) {
+      toast.success("Env created!");
+
+      navigate("/dashboard");
+    }
+  }, [navigate, actionData]);
 
   return (
-    <div className="py-10 flex flex-col items-center gap-3">
-      <Form method="post" className="flex flex-col gap-3 w-fit">
+    <div className="mx-auto rounded-2xl p-10 bg-tertiary w-fit flex flex-col items-center gap-3">
+      <Form method="post" className="flex flex-col gap-3">
         <button type="submit" className="btn self-end">
           Create
         </button>
@@ -126,9 +140,6 @@ export default function DashboardCreate() {
                 type="text"
                 name="value[]"
                 className="text-field"
-                aria-describedby={
-                  actionData?.formError ? "form-error-message" : undefined
-                }
               />
             </div>
           </div>
@@ -140,9 +151,6 @@ export default function DashboardCreate() {
                 name="key[]"
                 className="text-field"
                 placeholder="API_BASE_URL"
-                aria-describedby={
-                  actionData?.formError ? "form-error-message" : undefined
-                }
               />
               <input
                 key={`value-${i + 1}`}
@@ -155,13 +163,6 @@ export default function DashboardCreate() {
               />
             </div>
           ))}
-        </div>
-        <div id="form-error-message">
-          {actionData?.formError ? (
-            <p className="text-red-400" role="alert">
-              {actionData?.formError}
-            </p>
-          ) : null}
         </div>
       </Form>
       <button
