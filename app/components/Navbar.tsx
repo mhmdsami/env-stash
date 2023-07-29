@@ -55,8 +55,8 @@ const Navbar = ({ user }: NavbarProps) => {
           </form>
         </div>
       ) : (
-        <Link to="/auth/signin" className="btn">
-          Sign In
+        <Link to={to} className="btn">
+          {text}
         </Link>
       )}
     </nav>

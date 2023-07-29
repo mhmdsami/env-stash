@@ -69,7 +69,7 @@ export default function SignUp() {
           name="username"
           type="text"
           placeholder="username"
-          className="text-fieldi w-56"
+          className="text-field w-56"
         />
         <input
           name="password"
