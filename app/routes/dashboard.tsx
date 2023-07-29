@@ -1,4 +1,4 @@
-import Display from "~/components/Display";
+import DisplayDetails from "~/components/DisplayDetails";
 import { requireUserId } from "~/utils/session.server";
 import { db } from "~/utils/db.server";
 import { Outlet, useLoaderData } from "@remix-run/react";
@@ -31,7 +31,7 @@ export default function Dashboard() {
     <div className="px-10 py-5">
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <Outlet />
-      <Display envs={envs} />
+      <DisplayDetails envs={envs} />
     </div>
   );
 }

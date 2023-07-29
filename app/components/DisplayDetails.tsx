@@ -1,42 +1,15 @@
-import toast from "~/utils/toast";
 import { ClipboardCopy, Eye, Pen, Trash } from "lucide-react";
 import { useNavigate, useRevalidator } from "@remix-run/react";
-import type { Env as EnvType } from "~/types";
+import { copyToClipboard, deleteEnv, getEnvById } from "~/utils/helpers.client";
+import type { Env } from "~/types";
 
-interface DisplayProps {
-  envs: EnvType[];
+interface DisplayDetailsProps {
+  envs: Env[];
 }
 
-export default function Display({ envs }: DisplayProps) {
+export default function DisplayDetails({ envs }: DisplayDetailsProps) {
   const navigate = useNavigate();
   const { revalidate } = useRevalidator();
-
-  const copyToClipboard = async (id: string) => {
-    const env = envs.find((env) => env.id === id);
-    if (!env) return;
-
-    const { name, envElements } = env;
-
-    const text = envElements
-      .map(({ key, value }) => `${key}=${value}`)
-      .join("\n");
-    await navigator.clipboard.writeText(text);
-    toast.show(`${name} copied to clipboard!`, "🚀");
-  };
-
-  const deleteEnv = async (id: string) => {
-    const res = await fetch(`/env/delete?id=${id}`, {
-      method: "DELETE",
-    });
-
-    if (res.ok) {
-      toast.success("Env deleted!");
-      revalidate();
-    } else {
-      const data = await res.json();
-      toast.error(data);
-    }
-  };
 
   return (
     <div className="flex flex-col lg:w-2/5 mx-auto gap-2">
@@ -56,26 +29,29 @@ export default function Display({ envs }: DisplayProps) {
                   <Pen
                     width={16}
                     height={16}
-                    className="hover:text-blue-400"
-                    onClick={() => navigate(`/dashboard/env/${id}/edit`)}
+                    className="hover:text-green-400"
+                    onClick={() => navigate(`/env/${id}/edit`)}
                   />
                   <Eye
                     width={20}
                     height={20}
-                    className="hover:text-blue-400"
-                    onClick={() => navigate(`/dashboard/env/${id}`)}
+                    className="hover:text-green-400"
+                    onClick={() => navigate(`/env/${id}`)}
                   />
                   <ClipboardCopy
                     width={16}
                     height={16}
-                    className="hover:text-blue-400"
-                    onClick={() => copyToClipboard(id)}
+                    className="hover:text-green-400"
+                    onClick={() => copyToClipboard(id, getEnvById(id, envs))}
                   />
                   <Trash
                     width={16}
                     height={16}
                     className="hover:text-red-400"
-                    onClick={() => deleteEnv(id)}
+                    onClick={async () => {
+                      await deleteEnv(id);
+                      revalidate();
+                    }}
                   />
                 </div>
               </div>

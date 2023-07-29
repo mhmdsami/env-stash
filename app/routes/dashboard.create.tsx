@@ -1,4 +1,4 @@
-import toast from "~/utils/toast";
+import toast from "~/utils/toast.client";
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigate } from "@remix-run/react";
 import { db } from "~/utils/db.server";
