@@ -20,6 +20,9 @@ dependencies:
   '@remix-run/serve':
     specifier: ^1.19.1
     version: 1.19.1
+  '@types/node':
+    specifier: ^20.4.5
+    version: 20.4.5
   bcryptjs:
     specifier: ^2.4.3
     version: 2.4.3
@@ -42,7 +45,7 @@ dependencies:
 devDependencies:
   '@remix-run/dev':
     specifier: ^1.19.1
-    version: 1.19.1(@remix-run/serve@1.19.1)
+    version: 1.19.1(@remix-run/serve@1.19.1)(@types/node@20.4.5)
   '@remix-run/eslint-config':
     specifier: ^1.19.1
     version: 1.19.1(eslint@8.46.0)(react@18.2.0)(typescript@5.1.6)
@@ -1972,7 +1975,7 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: false
 
-  /@remix-run/dev@1.19.1(@remix-run/serve@1.19.1):
+  /@remix-run/dev@1.19.1(@remix-run/serve@1.19.1)(@types/node@20.4.5):
     resolution: {integrity: sha512-Piv/neRW1yMscvDpg8RZnyFzEYHT0etr3DYvBbSSe3wOWlXRItUFaXdn8I4ecp4gBkaNJmCni8ueYsk8FeqoBw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -1994,7 +1997,7 @@ packages:
       '@npmcli/package-json': 2.0.0
       '@remix-run/serve': 1.19.1
       '@remix-run/server-runtime': 1.19.1
-      '@vanilla-extract/integration': 6.2.1
+      '@vanilla-extract/integration': 6.2.1(@types/node@20.4.5)
       arg: 5.0.2
       cacache: 15.3.0
       chalk: 4.1.2
@@ -2328,7 +2331,6 @@ packages:
 
   /@types/node@20.4.5:
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
-    dev: true
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -2520,7 +2522,7 @@ packages:
       outdent: 0.8.0
     dev: true
 
-  /@vanilla-extract/integration@6.2.1:
+  /@vanilla-extract/integration@6.2.1(@types/node@20.4.5):
     resolution: {integrity: sha512-+xYJz07G7TFAMZGrOqArOsURG+xcYvqctujEkANjw2McCBvGEK505RxQqOuNiA9Mi9hgGdNp2JedSa94f3eoLg==}
     dependencies:
       '@babel/core': 7.22.9
@@ -2534,8 +2536,8 @@ packages:
       lodash: 4.17.21
       mlly: 1.4.0
       outdent: 0.8.0
-      vite: 4.4.7
-      vite-node: 0.28.5
+      vite: 4.4.7(@types/node@20.4.5)
+      vite-node: 0.28.5(@types/node@20.4.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7835,7 +7837,7 @@ packages:
       vfile-message: 3.1.4
     dev: true
 
-  /vite-node@0.28.5:
+  /vite-node@0.28.5(@types/node@20.4.5):
     resolution: {integrity: sha512-LmXb9saMGlrMZbXTvOveJKwMTBTNUH66c8rJnQ0ZPNX+myPEol64+szRzXtV5ORb0Hb/91yq+/D3oERoyAt6LA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -7847,7 +7849,7 @@ packages:
       picocolors: 1.0.0
       source-map: 0.6.1
       source-map-support: 0.5.21
-      vite: 4.4.7
+      vite: 4.4.7(@types/node@20.4.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7859,7 +7861,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.7:
+  /vite@4.4.7(@types/node@20.4.5):
     resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -7887,6 +7889,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.4.5
       esbuild: 0.18.17
       postcss: 8.4.27
       rollup: 3.27.0

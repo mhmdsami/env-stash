@@ -4,6 +4,7 @@ import { Form, useActionData, useNavigate } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 import { json } from "@remix-run/node";
 import { requireUserId } from "~/utils/session.server";
+import { encrypt } from "~/utils/crypto.server";
 import type { Env } from "~/types";
 import type { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
@@ -25,8 +26,8 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const form = await request.formData();
   const name = form.get("name");
-  const keys = form.getAll("key[]");
-  const values = form.getAll("value[]");
+  const keys = form.getAll("key[]") as string[];
+  const values = form.getAll("value[]") as string[];
 
   if (
     typeof name !== "string" ||
@@ -63,8 +64,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const envElements = keys.map((key, i) => ({
-    key,
-    value: values[i],
+    key: encrypt(key),
+    value: encrypt(values[i]),
   })) as Prisma.JsonArray;
 
   const env = await db.env.create({

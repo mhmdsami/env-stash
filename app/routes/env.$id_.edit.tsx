@@ -1,6 +1,6 @@
 import EditEnv from "~/components/EditEnv";
 import { requireUserId } from "~/utils/session.server";
-import { ActionFunction, json, redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { db } from "~/utils/db.server";
 import {
   Form,
@@ -8,11 +8,12 @@ import {
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import AddEnv from "~/components/AddEnv";
-import type { Prisma } from "@prisma/client";
 import toast from "~/utils/toast.client";
+import { decrypt, encrypt } from "~/utils/crypto.server";
+import type { LoaderFunction, ActionFunction } from "@remix-run/node";
+import type { Prisma } from "@prisma/client";
 import type { Env } from "~/types";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -21,12 +22,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { id } = params;
   if (!id) redirect("/dashboard");
 
-  const env = await db.env.findUnique({
+  const encryptedEnv = (await db.env.findUnique({
     where: {
       id,
       userId,
     },
-  });
+  })) as Env;
+
+  if (!encryptedEnv) redirect("/dashboard");
+
+  const env = {
+    ...encryptedEnv,
+    envElements: encryptedEnv.envElements.map((envElement) => ({
+      key: decrypt(envElement.key),
+      value: decrypt(envElement.value),
+    })),
+  };
 
   return json({ env });
 };
@@ -41,8 +52,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const { id } = params;
   const form = await request.formData();
   const name = form.get("name");
-  const keys = form.getAll("key[]");
-  const values = form.getAll("value[]");
+  const keys = form.getAll("key[]") as string[];
+  const values = form.getAll("value[]") as string[];
 
   if (!id) {
     return {
@@ -94,8 +105,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!env) redirect("/dashboard");
 
   const envElements = keys.map((key, i) => ({
-    key,
-    value: values[i],
+    key: encrypt(key),
+    value: encrypt(values[i]),
   })) as Prisma.JsonArray;
 
   const updatedEnv = await db.env.update({
