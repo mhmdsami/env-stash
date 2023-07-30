@@ -3,7 +3,9 @@ import { requireUserId } from "~/utils/session.server";
 import { db } from "~/utils/db.server";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import type { Env } from "~/types";
 import type { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { decrypt } from "~/utils/crypto.server";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -15,11 +17,19 @@ export const meta: V2_MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
 
-  const envs = await db.env.findMany({
+  const encryptedEnvs = (await db.env.findMany({
     where: {
       userId,
     },
-  });
+  })) as Env[];
+
+  const envs = encryptedEnvs.map((encryptedEnv) => ({
+    ...encryptedEnv,
+    envElements: encryptedEnv.envElements.map(({ key, value }) => ({
+      key: decrypt(key),
+      value: decrypt(value),
+    })),
+  }));
 
   return json({ envs });
 };
